@@ -3,8 +3,8 @@
 IndentNestedBlocks: false
 AllowNewlineBeforeBlockParameter: false
 
-Language:        Cpp
-# BasedOnStyle:  Google
+Language: Cpp
+# BasedOnStyle: Google
 AccessModifierOffset: -1
 ConstructorInitializerIndentWidth: 2
 SortIncludes: false
@@ -54,7 +54,7 @@ PenaltyReturnTypeOnItsOwnLine: 200
 PointerAlignment: Right
 SpacesBeforeTrailingComments: 2
 Cpp11BracedListStyle: true
-Standard:        Auto
+Standard:        Cpp11
 IndentWidth:     2
 TabWidth:        2
 UseTab:          Never
