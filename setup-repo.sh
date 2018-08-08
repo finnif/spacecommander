@@ -43,17 +43,19 @@ function ensure_hook_is_installed() {
   # check if this repo is referenced in the precommit hook already
   repo_path=$(git rev-parse --show-toplevel)
   if ! grep -q "$repo_path" "$pre_commit_file"; then
-    echo "#!/usr/bin/env bash" >> $pre_commit_file
-    echo "current_repo_path=\$(git rev-parse --show-toplevel)" >> $pre_commit_file
-    echo "repo_to_format=\"$repo_path\"" >> $pre_commit_file
-    echo 'if [ "$current_repo_path" == "$repo_to_format" ]'" && [ -e \"$DIR\"/format-objc-hook ]; then \"$DIR\"/format-objc-hook || exit 1; fi" >> $pre_commit_file
-  fi
+    sed -i '' "1i\\
+    #!/usr/bin/env bash\\
+    current_repo_path=\$(git rev-parse --show-toplevel)\\
+    repo_to_format=\"$repo_path\"\\
+    if [ \"\$current_repo_path\" == \"\$repo_to_format\" ] && [ -e \"$repo_path/appbuilder/live_app/spacecommander\"/format-objc-hook ]; then \"$repo_path/appbuilder/live_app/spacecommander\"/format-objc-hook || exit 1;fi
+    " $pre_commit_file
+    fi
 }
 
 function ensure_git_ignores_clang_format_file() {
   grep -q ".clang-format" ".gitignore"
   if [ $? -gt 0 ]; then
-    echo ".clang-format" >> ".gitignore"
+    echo "/.clang-format" >> ".gitignore"
   fi
 }
 
@@ -63,4 +65,3 @@ function symlink_clang_format() {
 
 
 ensure_pre_commit_file_exists && ensure_pre_commit_file_is_executable && ensure_hook_is_installed && ensure_git_ignores_clang_format_file && symlink_clang_format
-

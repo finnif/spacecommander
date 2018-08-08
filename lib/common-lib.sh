@@ -30,7 +30,7 @@ function objc_files_to_format() {
 	# optional_base_sha is intentionally unescaped so that it will not appear as empty quotes.
 	files=$(git diff --cached --name-only $optional_base_sha --diff-filter=ACM -- $locations_to_diff | grep -e '\.m$' -e '\.mm$' -e '\.h$' -e '\.hh$')
 	directories_to_ignore
-	echo "$files" | grep -v 'Pods/' | grep -v 'Carthage/' >&1
+	echo "$files" | grep -v 'Pods/' | grep -v 'Carthage/' | grep -v 'spacecommander/' >&1
 }
 
 # Returns a list of all Objective-C files in the git repository.
@@ -40,5 +40,5 @@ function all_valid_objc_files_in_repo() {
 	directories_to_check
 	files=$(git ls-tree --name-only --full-tree -r HEAD -- $locations_to_diff | grep -e '\.m$' -e '\.mm$' -e '\.h$' -e '\.hh$')
 	directories_to_ignore
-	echo "$files" | grep -v 'Pods/' | grep -v 'Carthage/' >&1
+	echo "$files" | grep -v 'Pods/' | grep -v 'Carthage/' | grep -v 'spacecommander/' >&1
 }
